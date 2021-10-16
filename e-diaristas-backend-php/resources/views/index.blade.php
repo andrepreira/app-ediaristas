@@ -18,7 +18,7 @@
                 <tr>
                     <th scope="row">{{ $diarista->id }}</th>
                     <td>{{ $diarista->nome_completo }}</td>
-                    <td>{{ $diarista->telefone }}</td>
+                    <td>{{\Clemdesign\PhpMask\Mask::apply( $diarista->telefone,'(00) 00000-0000') }}</td>
                     <td class="d-flex">
                         <a href="{{ route('diaristas.edit', $diarista) }}"
                           class="btn btn-primary m-2">Editar</a>
