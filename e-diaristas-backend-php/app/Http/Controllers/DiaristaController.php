@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DiaristaRequest;
 use App\Models\Diarista;
+use App\Services\ViaCep;
 use Illuminate\Http\Request;
 
 class DiaristaController extends Controller
 {
+    protected ViaCep $viaCep;
+
+    public function __construct(ViaCep $viaCep)
+    {
+        $this->viaCep = $viaCep;
+    }
     /**
      * Lista as diaristas
      *
@@ -34,12 +42,13 @@ class DiaristaController extends Controller
      * Cria uma diarista no banco de dados
      */
 
-    public function store(Request $request)
+    public function store(DiaristaRequest $request)
     {
         $dados = $request->except('_token');
         $dados['foto_usuario'] = $request->foto_usuario->store('public');
 
         $dados = $this->cleanData($dados, 'cpf', 'cep', 'telefone');
+        $dados['codigo_ibge'] = $this->viaCep->buscar($dados['cep'])['ibge'];
 
         Diarista::create($dados);
 
@@ -76,7 +85,7 @@ class DiaristaController extends Controller
      * Atualiza uma diarista no banco de dados
      */
 
-    public function update($id, Request $request)
+    public function update($id, DiaristaRequest $request)
     {
         $diarista = Diarista::findOrFail($id);
 
@@ -87,6 +96,7 @@ class DiaristaController extends Controller
         }
 
         $dados = $this->cleanData($dados, 'cpf', 'cep', 'telefone');
+        $dados['codigo_ibge'] = $this->viaCep->buscar($dados['cep'])['ibge'];
 
         $diarista->update($dados);
 
