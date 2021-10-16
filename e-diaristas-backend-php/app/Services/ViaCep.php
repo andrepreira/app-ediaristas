@@ -24,7 +24,7 @@ class ViaCep
 
         $dados = $resposta->json();
 
-        if (isset($dados['erro']) && $dados['erro'] === 'true' || empty($dados)) {
+        if (isset($dados['erro']) && $dados['erro'] === true || empty($dados)) {
             return false;
         }
 
