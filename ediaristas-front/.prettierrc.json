@@ -1,0 +1,10 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "eslintIntegration": false,
+    "trailingComma": "all"
+}
